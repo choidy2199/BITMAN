@@ -1,0 +1,23 @@
+/* TOOLBOX 글로벌 스타일. apps/web의 globals.css에서 import. */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+  --tl-primary: #185fa5;
+  --tl-primary-hover: #134d85;
+  --tl-cta: #e8593c;
+  --tl-cta-hover: #d44a2e;
+  --tl-section: #1a1d23;
+  --tl-border: #e5e7eb;
+  --tl-bg: #ffffff;
+  --tl-bg-muted: #f8f9fa;
+  --tl-text: #1a1d23;
+  --tl-text-muted: #6b7280;
+}
+
+html,
+body {
+  font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--tl-text);
+  background: var(--tl-bg);
+}
