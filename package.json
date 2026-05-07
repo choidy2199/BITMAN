@@ -1,0 +1,15 @@
+{
+  "name": "bitman",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.7.0",
+  "scripts": {
+    "dev:web": "pnpm --filter @bitman/web dev",
+    "build:web": "pnpm --filter @bitman/web build",
+    "lint:web": "pnpm --filter @bitman/web lint",
+    "gen:types": "bash scripts/gen-types.sh"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.4.1"
+  }
+}
