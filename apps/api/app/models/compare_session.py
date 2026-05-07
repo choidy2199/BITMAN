@@ -33,6 +33,11 @@ class CompareSession(Base, TimestampMixin):
     summary: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     """카운트 요약. 예: {"added": 12, "removed": 2, "price_changed": 34, "model_name_changed": 1}"""
 
+    sheet_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    header_row: Mapped[int] = mapped_column(default=1, nullable=False)
+    mapping: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    """비교 시 사용한 ColumnMapping. 머지에서 그대로 재사용."""
+
     diffs: Mapped[list["CompareDiff"]] = relationship(
         back_populates="session", cascade="all, delete-orphan"
     )

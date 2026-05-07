@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { api, fetcher, type DiffItem, type DiffType, type SessionSummary } from "@/lib/api-client";
@@ -30,6 +30,9 @@ export default function ReviewPage() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const router = useRouter();
   const [filter, setFilter] = useState<DiffType | "">("");
+  const [addNewRows, setAddNewRows] = useState(true);
+  const [markRemoved, setMarkRemoved] = useState(true);
+  const [merging, setMerging] = useState(false);
   const { data: session } = useSWR<SessionSummary>(
     () => (sessionId ? `/api/v1/compare/${sessionId}` : null),
     fetcher,
@@ -60,27 +63,22 @@ export default function ReviewPage() {
     await mutate();
   }
 
+  const selectedCount = useMemo(
+    () => (diffs || []).filter((d) => d.selected).length,
+    [diffs]
+  );
+
   async function startMerge() {
-    // 비교 시 사용한 시트/매핑을 다시 입력받아야 한다. MVP에선 첫 시트와 추정 매핑 재사용.
-    const sheetName = prompt("시트명 (사용자 Excel)", "단가표") || "단가표";
-    const skuCol = prompt("SKU 컬럼 (예: A)", "A") || "A";
-    const modelCol = prompt("모델명 컬럼 (없으면 빈값)", "B") || "";
-    const listCol = prompt("정가 컬럼 (없으면 빈값)", "D") || "";
-    const dealerCol = prompt("딜러가 컬럼 (없으면 빈값)", "E") || "";
-    const catCol = prompt("카테고리 컬럼 (없으면 빈값)", "") || "";
-    const job = await api.post<{ id: number }>(`/api/v1/compare/${sessionId}/merge`, {
-      sheet_name: sheetName,
-      mapping: {
-        sku: skuCol,
-        model_name: modelCol || null,
-        list_price: listCol || null,
-        dealer_price: dealerCol || null,
-        category: catCol || null,
-      },
-      add_new_rows: true,
-      mark_removed: true,
-    });
-    router.push(`/merges/${job.id}`);
+    setMerging(true);
+    try {
+      const job = await api.post<{ id: number }>(`/api/v1/compare/${sessionId}/merge`, {
+        add_new_rows: addNewRows,
+        mark_removed: markRemoved,
+      });
+      router.push(`/merges/${job.id}`);
+    } finally {
+      setMerging(false);
+    }
   }
 
   if (!session) return <p className="text-sm text-slate-500">불러오는 중...</p>;
@@ -117,7 +115,7 @@ export default function ReviewPage() {
         })}
       </section>
 
-      <div className="mb-3 flex gap-2">
+      <div className="mb-3 flex flex-wrap items-center gap-2">
         <button
           onClick={() => bulkSelect(true)}
           className="rounded border border-slate-300 bg-white px-3 py-1 text-xs hover:bg-slate-50"
@@ -137,13 +135,36 @@ export default function ReviewPage() {
           전체 보기
         </button>
         <div className="flex-1" />
+        <label className="flex items-center gap-1 text-xs text-slate-600">
+          <input
+            type="checkbox"
+            checked={addNewRows}
+            onChange={(e) => setAddNewRows(e.target.checked)}
+          />
+          신규 행 추가
+        </label>
+        <label className="flex items-center gap-1 text-xs text-slate-600">
+          <input
+            type="checkbox"
+            checked={markRemoved}
+            onChange={(e) => setMarkRemoved(e.target.checked)}
+          />
+          단종은 _단종후보 시트에 기록
+        </label>
         <button
           onClick={startMerge}
-          className="rounded bg-brand px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark"
+          disabled={merging || selectedCount === 0}
+          className="rounded bg-brand px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark disabled:opacity-60"
         >
-          내 Excel에 적용 (머지)
+          {merging ? "머지 중..." : `내 Excel에 적용 (${selectedCount}건)`}
         </button>
       </div>
+      {session.sheet_name && (
+        <p className="mb-3 text-xs text-slate-500">
+          시트: <span className="font-mono">{session.sheet_name}</span> · SKU 컬럼{" "}
+          <span className="font-mono">{(session.mapping as { sku?: string } | null)?.sku ?? "?"}</span>
+        </p>
+      )}
 
       <div className="overflow-x-auto rounded border bg-white">
         <table className="w-full text-xs">

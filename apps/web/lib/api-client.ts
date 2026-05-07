@@ -73,6 +73,9 @@ export interface SessionSummary {
   id: number;
   status: string;
   summary: Partial<Record<DiffType, number>> | null;
+  sheet_name?: string | null;
+  header_row?: number;
+  mapping?: Record<string, string | null> | null;
 }
 
 export interface PricelistVersion {

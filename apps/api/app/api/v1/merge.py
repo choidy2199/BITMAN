@@ -9,15 +9,12 @@ from app.core.deps import get_current_user
 from app.db.session import get_db
 from app.models import AuditLog, CompareSession, MergeJob, User, UserSheet
 from app.schemas import MergeJobResponse
-from app.schemas.user_sheet import ColumnMapping
 from app.workers.tasks import run_merge
 
 router = APIRouter(tags=["merge"])
 
 
 class MergeRequest(BaseModel):
-    sheet_name: str
-    mapping: ColumnMapping
     add_new_rows: bool = True
     mark_removed: bool = True
 
@@ -29,7 +26,7 @@ class MergeRequest(BaseModel):
 )
 def create_merge(
     session_id: int,
-    payload: MergeRequest,
+    payload: MergeRequest = MergeRequest(),
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -38,6 +35,8 @@ def create_merge(
         raise HTTPException(404, "Session not found")
     if session.status != "ready":
         raise HTTPException(400, "Session not ready")
+    if not session.sheet_name or not session.mapping:
+        raise HTTPException(400, "Session is missing sheet_name/mapping; recreate compare session")
 
     job = MergeJob(
         session_id=session_id,
@@ -50,8 +49,8 @@ def create_merge(
 
     run_merge.delay(
         job.id,
-        payload.sheet_name,
-        payload.mapping.model_dump(),
+        session.sheet_name,
+        session.mapping,
         {"add_new_rows": payload.add_new_rows, "mark_removed": payload.mark_removed},
     )
     db.add(

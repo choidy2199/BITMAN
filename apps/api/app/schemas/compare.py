@@ -9,6 +9,9 @@ class SessionSummary(BaseModel):
     id: int
     status: str
     summary: dict[str, int] | None = None
+    sheet_name: str | None = None
+    header_row: int = 1
+    mapping: dict[str, Any] | None = None
 
 
 class DiffItem(BaseModel):

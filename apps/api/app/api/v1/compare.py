@@ -54,6 +54,9 @@ def create_session(
         version_id=payload.version_id,
         created_by_id=user.id,
         status="pending",
+        sheet_name=payload.sheet_name,
+        header_row=payload.header_row,
+        mapping=payload.mapping.model_dump(),
     )
     db.add(session)
     db.commit()
@@ -75,7 +78,18 @@ def create_session(
         )
     )
     db.commit()
-    return SessionSummary(id=session.id, status=session.status, summary=session.summary)
+    return _to_summary(session)
+
+
+def _to_summary(s: CompareSession) -> SessionSummary:
+    return SessionSummary(
+        id=s.id,
+        status=s.status,
+        summary=s.summary,
+        sheet_name=s.sheet_name,
+        header_row=s.header_row,
+        mapping=s.mapping,
+    )
 
 
 @router.get("/{session_id}", response_model=SessionSummary)
@@ -85,7 +99,7 @@ def get_session(
     s = db.get(CompareSession, session_id)
     if s is None:
         raise HTTPException(404, "Not found")
-    return SessionSummary(id=s.id, status=s.status, summary=s.summary)
+    return _to_summary(s)
 
 
 @router.get("/{session_id}/diffs", response_model=list[DiffItem])
