@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Logo & wordmark</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  body { background: var(--color-neutral-50); }
+  .card { padding: 36px 28px; gap: 28px; background: var(--color-neutral-50); align-items: center; }
+  .row { display:flex; gap: 28px; align-items: center; }
+  .swatch { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .swatch .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--alpha-61); }
+  .surface {
+    width: 180px; height: 96px;
+    border-radius: 12px;
+    display:flex; align-items:center; justify-content:center;
+    border: 1px solid var(--alpha-22);
+  }
+  .surface.dark { background: var(--color-neutral-940); border-color: transparent; }
+  .surface.brand { background: var(--color-blue-600); border-color: transparent; }
+  .surface.light { background: #fff; }
+  img { height: 28px; }
+  .invert { filter: brightness(0) invert(1); }
+</style></head>
+<body>
+<div class="card">
+  <div class="row">
+    <div class="swatch"><div class="surface light"><img src="../assets/logo/wanted-logotype.svg" /></div><div class="lbl">on white</div></div>
+    <div class="swatch"><div class="surface dark"><img class="invert" src="../assets/logo/wanted-logotype.svg" /></div><div class="lbl">on neutral-940</div></div>
+    <div class="swatch"><div class="surface brand"><img class="invert" src="../assets/logo/wanted-logotype.svg" /></div><div class="lbl">on brand</div></div>
+    <div class="swatch"><div class="surface light"><img src="../assets/logo/wanted-symbol.svg" style="height:42px" /></div><div class="lbl">symbol</div></div>
+  </div>
+</div>
+</body></html>

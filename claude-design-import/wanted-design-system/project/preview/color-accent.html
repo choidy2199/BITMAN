@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Accent palette</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  .card { padding: 24px; }
+  .grid {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px;
+  }
+  .col { display:flex; flex-direction:column; gap:4px; align-items:center; }
+  .swatch {
+    width: 100%; aspect-ratio: 1; border-radius: 12px;
+  }
+  .name { font-size: 11px; font-weight: 600; }
+  .hex  { font-family: var(--font-mono); font-size: 9px; color: var(--alpha-61); }
+</style></head>
+<body>
+<div class="card">
+  <div class="grid">
+    <div class="col"><div class="swatch" style="background:var(--color-blue-600)"></div><div class="name">Blue</div><div class="hex">0066FF</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-skyblue-600)"></div><div class="name">SkyBlue</div><div class="hex">00AEFF</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-cyan-600)"></div><div class="name">Cyan</div><div class="hex">00BDDE</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-lime-600)"></div><div class="name">Lime</div><div class="hex">58CF04</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-redorange-600)"></div><div class="name">Redorng</div><div class="hex">FF5E00</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-violet-600)"></div><div class="name">Violet</div><div class="hex">6541F2</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-magenta-600)"></div><div class="name">Magenta</div><div class="hex">CB59FF</div></div>
+    <div class="col"><div class="swatch" style="background:var(--color-pink-600)"></div><div class="name">Pink</div><div class="hex">F553DA</div></div>
+  </div>
+</div>
+</body></html>

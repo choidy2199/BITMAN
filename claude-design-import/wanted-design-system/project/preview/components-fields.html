@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Form fields</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  .card { padding: 28px; gap: 14px; }
+  .field { display:flex; flex-direction:column; gap: 6px; }
+  .field .l { font-size: 13px; font-weight: 600; color: var(--color-text-neutral); }
+  .input {
+    height: 48px; border-radius: 10px;
+    border: 1px solid var(--alpha-22);
+    background: #fff; padding: 0 14px;
+    font-family: var(--font-sans); font-size: 15px;
+    color: var(--color-text-neutral);
+    transition: border-color 120ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .input::placeholder { color: var(--alpha-61); }
+  .input.focus { border-color: var(--color-blue-600); outline: 2px solid var(--alpha-08); }
+  .input.error { border-color: var(--color-red-600); }
+  .input.dis   { background: var(--alpha-08); color: var(--alpha-61); cursor: not-allowed; }
+  .err { font-size: 12px; color: var(--color-red-600); }
+  .row { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="row">
+    <div class="field"><div class="l">이메일 · Default</div><input class="input" placeholder="name@wanted.co.kr" /></div>
+    <div class="field"><div class="l">이메일 · Focus</div><input class="input focus" value="design@wanted.co.kr" /></div>
+  </div>
+  <div class="row">
+    <div class="field"><div class="l">비밀번호 · Error</div><input class="input error" type="password" value="••••" /><div class="err">8자 이상 입력해 주세요.</div></div>
+    <div class="field"><div class="l">이름 · Disabled</div><input class="input dis" value="홍길동" disabled /></div>
+  </div>
+</div>
+</body></html>

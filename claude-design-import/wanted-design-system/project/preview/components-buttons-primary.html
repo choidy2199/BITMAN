@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Buttons — Primary</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  .card { padding: 28px; gap: 18px; }
+  .row { display:flex; align-items:center; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    border: 0; cursor: pointer;
+    font-family: var(--font-sans); font-weight: 600;
+    transition: background 120ms cubic-bezier(0.16,1,0.3,1);
+    display: inline-flex; align-items:center; gap: 6px;
+  }
+  .btn-primary { background: var(--color-blue-600); color: #fff; }
+  .btn-primary.hover  { background: var(--color-blue-700); }
+  .btn-primary.press  { background: var(--color-blue-750); }
+  .btn-primary.dis    { background: var(--alpha-08); color: var(--color-text-neutral-disabled); cursor:not-allowed; }
+  .sz-l { height: 56px; padding: 0 24px; border-radius: 12px; font-size: 16px; }
+  .sz-m { height: 48px; padding: 0 20px; border-radius: 10px; font-size: 15px; }
+  .sz-s { height: 40px; padding: 0 16px; border-radius: 8px;  font-size: 14px; }
+  .sz-x { height: 32px; padding: 0 12px; border-radius: 6px;  font-size: 13px; }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--alpha-61); width: 56px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="row"><div class="lbl">Default</div>
+    <button class="btn btn-primary sz-l">지원하기</button>
+    <button class="btn btn-primary sz-m">Apply now</button>
+    <button class="btn btn-primary sz-s">Apply</button>
+    <button class="btn btn-primary sz-x">Save</button>
+  </div>
+  <div class="row"><div class="lbl">Hover</div>
+    <button class="btn btn-primary sz-l hover">지원하기</button>
+    <button class="btn btn-primary sz-m hover">Apply now</button>
+    <button class="btn btn-primary sz-s hover">Apply</button>
+    <button class="btn btn-primary sz-x hover">Save</button>
+  </div>
+  <div class="row"><div class="lbl">Press</div>
+    <button class="btn btn-primary sz-l press">지원하기</button>
+    <button class="btn btn-primary sz-m press">Apply now</button>
+    <button class="btn btn-primary sz-s press">Apply</button>
+    <button class="btn btn-primary sz-x press">Save</button>
+  </div>
+  <div class="row"><div class="lbl">Disabled</div>
+    <button class="btn btn-primary sz-l dis">지원하기</button>
+    <button class="btn btn-primary sz-m dis">Apply now</button>
+    <button class="btn btn-primary sz-s dis">Apply</button>
+    <button class="btn btn-primary sz-x dis">Save</button>
+  </div>
+</div>
+</body></html>

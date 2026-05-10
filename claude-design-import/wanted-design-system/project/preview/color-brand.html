@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Brand Color — Wanted Blue</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  .card { padding: 24px; gap: 14px; }
+  .swatch-main {
+    height: 156px; border-radius: 16px;
+    background: var(--color-blue-600);
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 18px 20px; color: #fff;
+  }
+  .swatch-main .name {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.0194em;
+    line-height: 1;
+  }
+  .swatch-main .hex {
+    font-family: var(--font-mono); font-size: 13px; opacity: 0.92;
+  }
+  .swatch-main .role {
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    font-weight: 600; opacity: 0.85;
+  }
+  .ramp { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; }
+  .ramp .stop { height: 36px; border-radius: 6px; }
+  .ramp-labels { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; }
+  .ramp-labels span {
+    font-size: 9px; font-family: var(--font-mono); color: var(--alpha-61); text-align: center;
+  }
+</style></head>
+<body>
+<div class="card">
+  <div class="swatch-main">
+    <div class="role">Primary · Brand</div>
+    <div>
+      <div class="name">Blue 600</div>
+      <div class="hex">#0066FF</div>
+    </div>
+  </div>
+  <div class="ramp" id="ramp"></div>
+  <div class="ramp-labels" id="labels"></div>
+</div>
+<script>
+  const stops = ['50','100','200','300','400','450','500','600','700','800','900'];
+  const ramp = document.getElementById('ramp');
+  const labels = document.getElementById('labels');
+  const cs = getComputedStyle(document.documentElement);
+  for (const s of stops) {
+    const v = cs.getPropertyValue(`--color-blue-${s}`).trim();
+    const div = document.createElement('div');
+    div.className = 'stop';
+    div.style.background = v;
+    div.style.boxShadow = (s==='50' || s==='100') ? 'inset 0 0 0 1px rgba(112,115,124,0.16)' : 'none';
+    ramp.appendChild(div);
+    const l = document.createElement('span'); l.textContent = s; labels.appendChild(l);
+  }
+</script>
+</body></html>

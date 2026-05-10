@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<title>Chips & Badges</title>
+<link rel="stylesheet" href="_card.css" />
+<style>
+  .card { padding: 28px; gap: 18px; }
+  .row { display:flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .chip {
+    height: 32px; padding: 0 12px; border-radius: 9999px;
+    background: var(--alpha-08); color: var(--color-text-neutral);
+    font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip.solid { background: var(--color-neutral-940); color: #fff; }
+  .chip.brand { background: var(--color-blue-100); color: var(--color-blue-700); }
+  .chip.outline { background: transparent; border: 1px solid var(--alpha-22); }
+  .badge {
+    height: 22px; padding: 0 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+    display: inline-flex; align-items: center;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .b-blue { background: var(--color-blue-600); color:#fff; }
+  .b-green { background: var(--color-green-600); color:#fff; }
+  .b-red { background: var(--color-red-600); color:#fff; }
+  .b-orange { background: var(--color-orange-600); color:#fff; }
+  .b-soft { background: var(--alpha-08); color: var(--color-text-neutral); }
+  .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--alpha-61); width: 60px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="row"><div class="lbl">Chips</div>
+    <span class="chip">서울</span>
+    <span class="chip">React</span>
+    <span class="chip outline">3년+</span>
+    <span class="chip brand">매칭률 92%</span>
+    <span class="chip solid">초대 받음</span>
+  </div>
+  <div class="row"><div class="lbl">Badges</div>
+    <span class="badge b-blue">NEW</span>
+    <span class="badge b-green">합격</span>
+    <span class="badge b-red">마감 임박</span>
+    <span class="badge b-orange">서류 검토</span>
+    <span class="badge b-soft">D-3</span>
+  </div>
+</div>
+</body></html>
